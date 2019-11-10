@@ -35,3 +35,34 @@ Restrict path to be opened. Usually, package name. You can set multiple path wit
 ```
 ./Exhibitionism --input bukkit.jar --output bukkit-open.jar -parallel 8 --path net.minecraft,org.bukkit.craftbukkit
 ```
+
+## API Support
+Exhibitionism is hosted in heartpattern maven repository. To use Exhibitionism in your code, first add maven repository.
+```groovy
+repositories{
+    maven{
+        url 'https://maven.heartpattern.kr/repository/maven-public/'
+    }
+}
+```
+And add dependency
+```groovy
+dependencies{
+    compile 'kr.heartpattern:Exhibitionism:1.0.0-SNAPSHOT'
+}
+```
+
+API is quite tiny and simple. You can see example usage in App.kt
+```kotlin
+transform(
+            ExhibitionismOptions(
+                source = "bukkit.jar",
+                destination = "bukkit-open.jar",
+                parallel = 8,
+                path = setOf("net.minecraft", "org.bukkit.craftbukkit"),
+                logger = Logger.getGlobal(),
+                public = true,
+                open = true
+            )
+        )
+```
