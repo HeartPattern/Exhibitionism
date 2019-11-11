@@ -17,6 +17,7 @@ class App : CliktCommand() {
     private val nopublic: Boolean by option().flag()
     private val noopen: Boolean by option().flag()
     private val path: List<String> by option().split(",").defaultLazy { listOf() }
+    private val noStaticFinal: Boolean by option().flag()
 
     override fun run() {
         val logger = Logger.getLogger("Exhibitionism")
@@ -34,7 +35,8 @@ class App : CliktCommand() {
                 path = path.map { it.replace('.', '/') }.toSet(),
                 logger = logger,
                 public = !nopublic,
-                open = !noopen
+                open = !noopen,
+                noStaticFinal = noStaticFinal
             )
         )
         exitProcess(0)

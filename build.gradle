@@ -34,6 +34,8 @@ publishing {
     publications {
         maven(MavenPublication) {
             artifactId 'Exhibitionism'
+
+            from components.java
         }
     }
     repositories {

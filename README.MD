@@ -26,10 +26,13 @@ Number of thread used to transform class.
 If this flag is set, do not publify.
 
 ### --noopen (Flag)
-If this flag is set, do not non-final-ify.
+If this flag is set, do not open final class/field/method.
 
 ### --path (Optional)
 Restrict path to be opened. Usually, package name. You can set multiple path with deliminator ','
+
+### --noStaticFinal (Flag)
+If this flag set, do not open static final field.
 
 ## Example usage
 ```
@@ -62,7 +65,8 @@ transform(
                 path = setOf("net.minecraft", "org.bukkit.craftbukkit"),
                 logger = Logger.getGlobal(),
                 public = true,
-                open = true
+                open = true,
+                noStaticFinal = true
             )
         )
 ```

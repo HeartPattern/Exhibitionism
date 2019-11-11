@@ -31,22 +31,31 @@ fun transform(option: ExhibitionismOptions) {
     )
     var totalCount = 0
 
-    logger.info("Start transformation")
+    logger.fine("Start transformation")
 
     for (entry in input.entries()) {
-        if (entry.name.endsWith(".class") && option.path.any { entry.name.startsWith(it) }) {
-            logger.fine("Transform class: ${entry.name}")
-            val bytes = input.getInputStream(entry)
-            transformExecutor.execute {
-                val reader = ClassReader(bytes)
-                val writer = ClassWriter(0)
-                val transformer = ExhibitionismTransformer(writer, option)
-                reader.accept(transformer, ClassReader.EXPAND_FRAMES)
-                resultQueue.put(
-                    entry.name to writer.toByteArray()
-                )
+        if (entry.name.endsWith(".class")) {
+            if (option.path.isEmpty() || option.path.any { entry.name.startsWith(it) }) {
+                logger.fine("Transform class: ${entry.name}")
+                val bytes = input.getInputStream(entry).readBytes()
+                transformExecutor.execute {
+                    val reader = ClassReader(bytes)
+                    val writer = ClassWriter(0)
+                    val transformer = ExhibitionismTransformer(writer, option)
+                    reader.accept(transformer, ClassReader.EXPAND_FRAMES)
+                    resultQueue.put(
+                        entry.name to writer.toByteArray()
+                    )
+                }
+                totalCount++
+            } else {
+                logger.fine("Copy class: ${entry.name}")
+                output.putNextEntry(ZipEntry(entry.name))
+                ByteArrayInputStream(input.getInputStream(entry).readBytes()).use {
+                    it.copyTo(output)
+                }
+                output.closeEntry()
             }
-            totalCount++
         } else {
             logger.fine("Copy resource: ${entry.name}")
             output.putNextEntry(ZipEntry(entry.name))
@@ -66,10 +75,10 @@ fun transform(option: ExhibitionismOptions) {
         output.closeEntry()
         completeCount++
         if (completeCount % 1000 == 0) {
-            logger.info("Processing...  (${completeCount}/${totalCount})")
+            logger.fine("Processing...  (${completeCount}/${totalCount})")
         }
     }
 
     output.close()
-    logger.info("Complete transformation")
+    logger.fine("Complete transformation")
 }
