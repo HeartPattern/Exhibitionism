@@ -39,7 +39,8 @@ pipeline{
     }
     post{
         always{
-            archiveArtifacts artifacts: ['build/distributions/*', 'build/libs/*'], fingerprint: true
+            archiveArtifacts artifacts: 'build/distributions/*', fingerprint: true
+            archiveArtifacts artifacts: 'build/libs/*', fingerprint: true
         }
     }
 }
