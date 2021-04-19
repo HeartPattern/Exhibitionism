@@ -8,7 +8,7 @@ group = "kr.heartpattern"
 version = "1.0.0-SNAPSHOT"
 
 repositories {
-    maven("https://maven.heartpattern.kr/repository/maven-public/")
+    maven("https://repo.heartpattern.io/repository/maven-public/")
 }
 
 dependencies {
@@ -41,8 +41,8 @@ publishing {
                 "https://maven.heartpattern.kr/repository/maven-public-releases/"
         ) {
             credentials {
-                username = project.properties["nexusUser"] as String
-                password = project.properties["nexusPassword"] as String
+                username = project.properties["nexusUser"] as String?
+                password = project.properties["nexusPassword"] as String?
             }
         }
     }
