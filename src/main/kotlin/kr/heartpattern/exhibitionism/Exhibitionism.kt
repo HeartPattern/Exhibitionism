@@ -57,9 +57,11 @@ fun transform(option: ExhibitionismOptions) {
         }
     }
 
+
     transformThread.shutdown()
-    resultThread.shutdown()
     transformThread.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS)
+
+    resultThread.shutdown()
     resultThread.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS)
 
     input.close()
