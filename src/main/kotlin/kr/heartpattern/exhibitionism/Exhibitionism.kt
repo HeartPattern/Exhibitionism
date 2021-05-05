@@ -45,13 +45,14 @@ fun transform(option: ExhibitionismOptions) {
         val bytes = input.getInputStream(entry).readBytes()
 
         if (entry.name.endsWith(".class")
-            && (option.path.isEmpty() || option.path.any { entry.name.startsWith(it) })) {
+            && (option.path.isEmpty() || option.path.any { entry.name.startsWith(it) })
+        ) {
             transformThread.execute {
                 val reader = ClassReader(bytes)
                 val writer = ClassWriter(0)
                 val transformer = ExhibitionismTransformer(writer, option)
                 reader.accept(transformer, ClassReader.EXPAND_FRAMES)
-                resultThread.execute{
+                resultThread.execute {
                     output.putNextEntry(ZipEntry(entry.name))
                     output.write(writer.toByteArray())
                     output.closeEntry()
@@ -59,7 +60,7 @@ fun transform(option: ExhibitionismOptions) {
                 }
             }
         } else {
-            resultThread.execute{
+            resultThread.execute {
                 output.putNextEntry(ZipEntry(entry.name))
                 ByteArrayInputStream(bytes).use {
                     it.copyTo(output)
