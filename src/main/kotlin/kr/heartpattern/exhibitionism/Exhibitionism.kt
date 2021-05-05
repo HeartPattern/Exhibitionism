@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit
 import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
 import java.util.zip.ZipOutputStream
+import kotlin.system.exitProcess
 
 fun transform(option: ExhibitionismOptions) {
     val logger = option.logger
@@ -27,7 +28,19 @@ fun transform(option: ExhibitionismOptions) {
     logger.fine("Start transformation")
     val progress = ProgressBar("Transform", 0)
 
+    val processedPaths: MutableList<String> = mutableListOf()
+
     for (entry in input.entries()) {
+        if (entry.name in processedPaths) {
+            if (option.fixDuplicates) {
+                logger.info("Skip duplicated file: ${entry.name}")
+                continue
+            }
+            logger.severe("Input file is contains duplicated entry: ${entry.name}.")
+            logger.severe("Try with --ignoreDuplicates")
+            exitProcess(1)
+        }
+        processedPaths += entry.name
         progress.maxHint(progress.max + 1)
         val bytes = input.getInputStream(entry).readBytes()
 

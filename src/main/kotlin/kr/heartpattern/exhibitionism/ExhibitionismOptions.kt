@@ -11,5 +11,6 @@ data class ExhibitionismOptions(
     val path: Set<String> = setOf(),
     val public: Boolean = true,
     val open: Boolean = true,
-    val noStaticFinal: Boolean = false
+    val noStaticFinal: Boolean = false,
+    val fixDuplicates: Boolean = false,
 )

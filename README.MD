@@ -34,6 +34,9 @@ Restrict path to be opened. Usually, package name. You can set multiple path wit
 ### --noStaticFinal (Flag)
 If this flag set, do not open static final field.
 
+### --ignoreDuplicates (Flag)
+If set, Exhibitionism will ignore duplicated files and does not add them to the output file.
+
 ## Example usage
 ```
 ./Exhibitionism --input bukkit.jar --output bukkit-open.jar -parallel 8 --path net.minecraft,org.bukkit.craftbukkit
