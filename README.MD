@@ -19,7 +19,7 @@ Input file name.
 ### --output
 Output file name. If file already exists, replace original.
 
-### --parallel (Optional, Default=1)
+### --parallel (Optional, Default=Maximum system threads)
 Number of thread used to transform class.
 
 ### --nopublic (Flag)

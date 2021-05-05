@@ -13,7 +13,7 @@ import kotlin.system.exitProcess
 class App : CliktCommand() {
     private val input: File by option().file(exists = true).required()
     private val output: File by option().file(exists = false).required()
-    private val parallel: Int by option().int().default(1)
+    private val parallel: Int by option().int().default(Runtime.getRuntime().availableProcessors())
     private val nopublic: Boolean by option().flag()
     private val noopen: Boolean by option().flag()
     private val path: List<String> by option().split(",").defaultLazy { listOf() }
