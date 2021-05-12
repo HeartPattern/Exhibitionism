@@ -13,7 +13,7 @@ repositories {
 
 dependencies {
     compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    compile("org.ow2.asm:asm:7.2")
+    compile("org.ow2.asm:asm:9.1")
     compile("com.github.ajalt:clikt:2.1.0")
     compile("me.tongfei:progressbar:0.8.1")
 }
