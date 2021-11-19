@@ -4,7 +4,7 @@ import org.objectweb.asm.*
 import org.objectweb.asm.Opcodes.*
 
 class ExhibitionismTransformer(cv: ClassVisitor, private val option: ExhibitionismOptions) :
-    ClassVisitor(Opcodes.ASM7, cv) {
+    ClassVisitor(Opcodes.ASM9, cv) {
     override fun visitMethod(
         access: Int,
         name: String?,

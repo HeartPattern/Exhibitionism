@@ -9,13 +9,14 @@ version = "1.0.0-SNAPSHOT"
 
 repositories {
     maven("https://repo.heartpattern.io/repository/maven-public/")
+    mavenCentral()
 }
 
 dependencies {
     compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     compile("org.ow2.asm:asm:9.2")
-    compile("com.github.ajalt:clikt:2.1.0")
-    compile("me.tongfei:progressbar:0.8.1")
+    compile("com.github.ajalt:clikt:2.8.0")
+    compile("me.tongfei:progressbar:0.9.2")
 }
 
 application {
