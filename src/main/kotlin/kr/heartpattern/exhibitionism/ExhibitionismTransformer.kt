@@ -39,9 +39,8 @@ class ExhibitionismTransformer(cv: ClassVisitor, private val option: Exhibitioni
             access = (access and (ACC_PRIVATE or ACC_PROTECTED).inv()) or ACC_PUBLIC
         }
         if (option.open) {
-            if (type == Type.FIELD && option.noStaticFinal && access and (ACC_FINAL or ACC_STATIC) == (ACC_FINAL or ACC_STATIC)) {
-                access = access and ACC_FINAL.inv()
-            } else {
+            val staticFinal = access and (ACC_FINAL or ACC_STATIC) == (ACC_FINAL or ACC_STATIC)
+            if (type != Type.FIELD || option.noStaticFinal || !staticFinal) {
                 access = access and ACC_FINAL.inv()
             }
         }
