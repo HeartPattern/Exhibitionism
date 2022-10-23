@@ -4,13 +4,13 @@ import org.objectweb.asm.*
 import org.objectweb.asm.Opcodes.*
 
 class ExhibitionismTransformer(cv: ClassVisitor, private val option: ExhibitionismOptions) :
-    ClassVisitor(Opcodes.ASM9, cv) {
+    ClassVisitor(ASM9, cv) {
     override fun visitMethod(
         access: Int,
         name: String?,
         descriptor: String?,
         signature: String?,
-        exceptions: Array<out String>?
+        exceptions: Array<out String>?,
     ): MethodVisitor {
         return super.visitMethod(transformAccess(Type.METHOD, access), name, descriptor, signature, exceptions)
     }
@@ -49,7 +49,7 @@ class ExhibitionismTransformer(cv: ClassVisitor, private val option: Exhibitioni
         if (option.public) {
             access = (access and (ACC_PRIVATE or ACC_PROTECTED).inv()) or ACC_PUBLIC
         }
-        if (option.open && (type != Type.FIELD || !option.noStaticFinal || access and (ACC_FINAL and ACC_STATIC) != (ACC_FINAL and ACC_STATIC))) {
+        if (option.open && (type != Type.FIELD || !option.noStaticFinal || access and (ACC_FINAL or ACC_STATIC) != (ACC_FINAL or ACC_STATIC))) {
             access = access and ACC_FINAL.inv()
         }
         return access
