@@ -3,15 +3,9 @@ package kr.heartpattern.exhibitionism
 import org.objectweb.asm.*
 import org.objectweb.asm.Opcodes.*
 
-class ExhibitionismTransformer(cv: ClassVisitor, private val option: ExhibitionismOptions) :
-    ClassVisitor(ASM9, cv) {
-    override fun visitMethod(
-        access: Int,
-        name: String?,
-        descriptor: String?,
-        signature: String?,
-        exceptions: Array<out String>?,
-    ): MethodVisitor {
+class ExhibitionismTransformer(cv: ClassVisitor, private val option: ExhibitionismOptions) : ClassVisitor(ASM9, cv) {
+
+    override fun visitMethod(access: Int, name: String?, descriptor: String?, signature: String?, exceptions: Array<out String>?): MethodVisitor {
         return super.visitMethod(transformAccess(Type.METHOD, access), name, descriptor, signature, exceptions)
     }
 
@@ -23,24 +17,11 @@ class ExhibitionismTransformer(cv: ClassVisitor, private val option: Exhibitioni
         return super.visitInnerClass(name, outerName, innerName, transformAccess(Type.CLASS, access))
     }
 
-    override fun visit(
-        version: Int,
-        access: Int,
-        name: String?,
-        signature: String?,
-        superName: String?,
-        interfaces: Array<out String>?
-    ) {
+    override fun visit(version: Int, access: Int, name: String?, signature: String?, superName: String?, interfaces: Array<out String>?) {
         return super.visit(version, transformAccess(Type.CLASS, access), name, signature, superName, interfaces)
     }
 
-    override fun visitField(
-        access: Int,
-        name: String?,
-        descriptor: String?,
-        signature: String?,
-        value: Any?
-    ): FieldVisitor {
+    override fun visitField(access: Int, name: String?, descriptor: String?, signature: String?, value: Any?): FieldVisitor {
         return super.visitField(transformAccess(Type.FIELD, access), name, descriptor, signature, value)
     }
 
@@ -56,6 +37,9 @@ class ExhibitionismTransformer(cv: ClassVisitor, private val option: Exhibitioni
     }
 
     private enum class Type {
-        MODULE, CLASS, FIELD, METHOD
+        MODULE,
+        CLASS,
+        FIELD,
+        METHOD,
     }
 }
