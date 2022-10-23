@@ -11,14 +11,14 @@ import java.util.logging.Logger
 import kotlin.system.exitProcess
 
 class App : CliktCommand() {
-    private val input: File by option().file(exists = true).required()
-    private val output: File by option().file(exists = false).required()
+    private val input: File by option().file(mustExist = true).required()
+    private val output: File by option().file(mustExist = false).required()
     private val parallel: Int by option().int().default(Runtime.getRuntime().availableProcessors())
     private val nopublic: Boolean by option().flag()
     private val noopen: Boolean by option().flag()
     private val path: List<String> by option().split(",").defaultLazy { listOf() }
     private val noStaticFinal: Boolean by option().flag()
-    private val ignoreDuplicates: Boolean by option("--ignoreDuplicates").flag()
+    private val ignoreDuplicates: Boolean by option().flag()
 
     override fun run() {
         val logger = Logger.getLogger("Exhibitionism")
