@@ -19,6 +19,7 @@ class App : CliktCommand() {
     private val path: List<String> by option().split(",").defaultLazy { listOf() }
     private val noStaticFinal: Boolean by option().flag()
     private val ignoreDuplicates: Boolean by option().flag()
+    private val fixInvalidAccess: Boolean by option().flag(default = true)
 
     override fun run() {
         val logger = Logger.getLogger("Exhibitionism")
@@ -39,6 +40,7 @@ class App : CliktCommand() {
                 open = !noopen,
                 noStaticFinal = noStaticFinal,
                 fixDuplicates = ignoreDuplicates,
+                fixInvalidAccess = fixInvalidAccess,
             )
         )
         exitProcess(0)

@@ -13,4 +13,5 @@ data class ExhibitionismOptions(
     val open: Boolean = true,
     val noStaticFinal: Boolean = false,
     val fixDuplicates: Boolean = false,
+    val fixInvalidAccess: Boolean = true,
 )
