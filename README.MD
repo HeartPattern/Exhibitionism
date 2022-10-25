@@ -51,6 +51,10 @@ If this flag set, do not open static final field.
 
 If set, Exhibitionism will ignore duplicated files and does not add them to the output file.
 
+### --fixInvalidAccess (Flag)
+
+If not set, invalid access to classes will be fixed
+
 ## Example usage
 
 ```
