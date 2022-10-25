@@ -40,7 +40,7 @@ class ExhibitionismTransformer(cv: ClassVisitor, private val option: Exhibitioni
         }
         if (option.open) {
             val staticFinal = access and (ACC_FINAL or ACC_STATIC) == (ACC_FINAL or ACC_STATIC)
-            if (type != Type.FIELD || option.noStaticFinal || !staticFinal) {
+            if (type != Type.FIELD || !option.noStaticFinal || !staticFinal) {
                 access = access and ACC_FINAL.inv()
             }
         }
