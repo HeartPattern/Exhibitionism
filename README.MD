@@ -43,13 +43,17 @@ If this flag is set, do not open final class/field/method.
 
 Restrict path to be opened. Usually, package name. You can set multiple path with deliminator ','
 
-### --noStaticFinal (Flag)
+### --ignoreStaticFinal
 
-If this flag set, do not open static final field.
+If this flag set, do not modify static final field, since such field is usually constant. 
 
 ### --ignoreDuplicates (Flag)
 
 If set, Exhibitionism will ignore duplicated files and does not add them to the output file.
+
+### --fixInvalidAccess (Flag)
+
+If not set, invalid access to classes will be fixed
 
 ## Example usage
 

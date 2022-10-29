@@ -1,6 +1,8 @@
+import org.gradle.configurationcache.extensions.capitalized
+
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.4.32"
-    id("application")
+    kotlin("jvm") version "1.7.20"
+    application
     id("maven-publish")
 }
 
@@ -13,14 +15,14 @@ repositories {
 }
 
 dependencies {
-    compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    compile("org.ow2.asm:asm:9.2")
-    compile("com.github.ajalt:clikt:2.8.0")
-    compile("me.tongfei:progressbar:0.9.2")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.ow2.asm:asm:9.4")
+    implementation("com.github.ajalt:clikt:2.8.0")
+    implementation("me.tongfei:progressbar:0.9.5")
 }
 
 application {
-    mainClassName = "kr.heartpattern.exhibitionism.AppKt"
+    mainClass.set("kr.heartpattern.exhibitionism.AppKt")
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
@@ -47,4 +49,15 @@ publishing {
             }
         }
     }
+}
+val fatJar = task("fatJar", type = org.gradle.jvm.tasks.Jar::class) {
+    archiveBaseName.set("${project.name}-fat")
+    manifest {
+        attributes["Implementation-Title"] = project.name.capitalized()
+        attributes["Implementation-Version"] = project.version
+        attributes["Main-Class"] = application.mainClass
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
+    with(tasks["jar"] as CopySpec)
 }
